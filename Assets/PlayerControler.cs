@@ -8,7 +8,8 @@ public class PlayerControler : MonoBehaviour
     public float speed;                //Floating point variable to store the player's movement speed.
     public bool isGrounded = false;
     private Rigidbody2D rb2d;        //Store a reference to the Rigidbody2D component required to use 2D Physics.
-
+    public Animator animator;
+    float horizontalMove = 0f;
     // Use this for initialization
     void Start()
     {
@@ -20,15 +21,13 @@ public class PlayerControler : MonoBehaviour
     void FixedUpdate()
     {
         Jump();
+
         //Store the current horizontal input in the float moveHorizontal.
-        
-
         //Store the current vertical input in the float moveVertical.
-        
-
         //Use the two store floats to create a new Vector2 variable movement.
-        Vector2 movement = new Vector2(Input.GetAxisRaw("Horizontal"),0f);
-
+        Vector2 movement = new Vector2(Input.GetAxisRaw("Horizontal"), 0f);
+        horizontalMove = Input.GetAxisRaw("Horizontal");
+        animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
         //Call the AddForce function of our Rigidbody2D rb2d supplying movement multiplied by speed to move our player.
         rb2d.AddForce(movement * speed);
     }
@@ -36,7 +35,7 @@ public class PlayerControler : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump") && isGrounded == true)
         {
-            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, 15f), ForceMode2D.Impulse);
+            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, 22f), ForceMode2D.Impulse);
         }
       
     }
